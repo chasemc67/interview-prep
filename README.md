@@ -6,6 +6,7 @@ A collection of concise, well-organized cheat sheets for software engineering in
 
 - [Python Cheat Sheet](python_cheat_sheet.md) - Essential Python syntax, data structures, and patterns
 - [TypeScript Cheat Sheet](typescript_cheat_sheet.md) - TypeScript types, interfaces, and common interview patterns
+- [React Function Components Cheat Sheet](react_function_components_cheat_sheet.md) - React hooks, patterns, and modern React development practices
 
 ## Structure
 
