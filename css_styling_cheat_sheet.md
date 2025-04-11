@@ -16,31 +16,32 @@ float: left | right | none;
 margin: value;
 padding: value;
 border: width style color;
-box-sizing: content-box | border-box;
+box-sizing: border-box;
 
 /* Flexbox */
 display: flex;
 flex-direction: row | column;
-justify-content: flex-start | center | flex-end | space-between | space-around;
-align-items: flex-start | center | flex-end | stretch | baseline;
+justify-content: flex-start | center | flex-end | space-between;
+align-items: flex-start | center | flex-end | stretch;
 
 /* Grid */
 display: grid;
 grid-template-columns: repeat(3, 1fr);
 grid-template-rows: auto;
-gap: value;
+gap: 1rem;
 ```
 
 ### Common Patterns
 
 ```css
-/* Centering */
+/* Centering with Flexbox */
 .center-flex {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+/* Centering with Grid */
 .center-grid {
   display: grid;
   place-items: center;
@@ -57,6 +58,7 @@ gap: value;
 .button {
   transition: all 0.3s ease;
 }
+
 .button:hover {
   transform: scale(1.05);
 }
@@ -80,12 +82,12 @@ gap: value;
 
 ```css
 /* ✅ Use Flexbox for:
-   - One-dimensional layouts (row OR column)
-   - Aligning items in a single direction
-   - Distributing space between items
-   - Navigation bars
-   - Card layouts with equal heights
-*/
+ * - One-dimensional layouts (row OR column)
+ * - Aligning items in a single direction
+ * - Distributing space between items
+ * - Navigation bars
+ * - Card layouts with equal heights
+ */
 
 .navbar {
   display: flex;
@@ -104,12 +106,12 @@ gap: value;
 
 ```css
 /* ✅ Use Grid for:
-   - Two-dimensional layouts (rows AND columns)
-   - Complex layouts with overlapping elements
-   - Creating responsive layouts with minimal media queries
-   - Page layouts
-   - Image galleries
-*/
+ * - Two-dimensional layouts (rows AND columns)
+ * - Complex layouts with overlapping elements
+ * - Creating responsive layouts with minimal media queries
+ * - Page layouts
+ * - Image galleries
+ */
 
 .page-layout {
   display: grid;
@@ -301,18 +303,22 @@ div.container > ul > li > a {
 /* Common Breakpoints */
 /* Small devices (phones) */
 @media (max-width: 576px) {
+  /* styles */
 }
 
 /* Medium devices (tablets) */
 @media (min-width: 577px) and (max-width: 768px) {
+  /* styles */
 }
 
 /* Large devices (desktops) */
 @media (min-width: 769px) and (max-width: 992px) {
+  /* styles */
 }
 
 /* Extra large devices */
 @media (min-width: 993px) {
+  /* styles */
 }
 ```
 
