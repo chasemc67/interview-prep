@@ -599,3 +599,174 @@ function UserProfile({ id, name, age }: UserProps): JSX.Element {
   );
 }
 ```
+
+## 12. Hook Usage Guidelines
+
+### When to Use Different Hooks
+
+```tsx
+// useState
+// ✅ Use when:
+// - Managing local component state
+// - State that doesn't need to be shared with other components
+// - Simple boolean flags or counters
+const [isOpen, setIsOpen] = useState(false);
+const [count, setCount] = useState(0);
+
+// useEffect
+// ✅ Use when:
+// - Fetching data
+// - Setting up subscriptions
+// - Manually changing the DOM
+// - Setting up timers
+// ❌ Don't use for:
+// - Event handlers (use callbacks instead)
+// - Computations (use useMemo instead)
+useEffect(() => {
+  const subscription = dataSource.subscribe();
+  return () => subscription.unsubscribe();
+}, []);
+
+// useCallback
+// ✅ Use when:
+// - Passing callbacks to optimized child components (React.memo)
+// - Callbacks used in useEffect dependencies
+// - Callbacks that are expensive to create
+// ❌ Don't use for:
+// - Simple event handlers in the same component
+// - Callbacks that don't cause re-renders
+const memoizedCallback = useCallback(() => {
+  doSomething(a, b);
+}, [a, b]);
+
+// useMemo
+// ✅ Use when:
+// - Computing expensive values
+// - Preventing unnecessary re-renders
+// - Referential equality in dependencies
+// ❌ Don't use for:
+// - Simple calculations
+// - Values that change frequently
+const memoizedValue = useMemo(() => {
+  return computeExpensiveValue(a, b);
+}, [a, b]);
+
+// useRef
+// ✅ Use when:
+// - Accessing DOM elements
+// - Storing mutable values that should persist between renders
+// - Values that shouldn't trigger re-renders
+// ❌ Don't use for:
+// - Values that should trigger re-renders
+const inputRef = useRef<HTMLInputElement>(null);
+const previousValue = useRef(value);
+```
+
+### Common Confusing Patterns
+
+```tsx
+// 1. Dependency Arrays in useEffect
+// ❌ Common mistake: Missing dependencies
+useEffect(() => {
+  setCount(count + 1); // count should be in deps
+}, []);
+
+// ✅ Better: Use functional updates or include all deps
+useEffect(() => {
+  setCount((prev) => prev + 1);
+}, []);
+
+// 2. Infinite Loops
+// ❌ Common mistake: Setting state without proper conditions
+useEffect(() => {
+  setCount(count + 1); // Will cause infinite loop
+}, [count]);
+
+// ✅ Better: Add conditions or use functional updates
+useEffect(() => {
+  if (count < 10) {
+    setCount((prev) => prev + 1);
+  }
+}, [count]);
+
+// 3. Stale Closures
+// ❌ Common mistake: Using stale state in callbacks
+const handleClick = () => {
+  console.log(count); // Might be stale
+  setCount(count + 1);
+};
+
+// ✅ Better: Use functional updates
+const handleClick = () => {
+  setCount((prev) => prev + 1);
+};
+
+// 4. Unnecessary useCallback/useMemo
+// ❌ Common mistake: Overusing memoization
+const handleClick = useCallback(() => {
+  console.log("clicked");
+}, []); // No dependencies, no benefit
+
+// ✅ Better: Only use when necessary
+const handleClick = () => {
+  console.log("clicked");
+};
+
+// 5. Prop Drilling vs Context
+// ❌ Common mistake: Passing props through many levels
+function App() {
+  const [theme, setTheme] = useState("light");
+  return <Header theme={theme} />;
+}
+
+// ✅ Better: Use context for global state
+const ThemeContext = createContext();
+function App() {
+  const [theme, setTheme] = useState("light");
+  return (
+    <ThemeContext.Provider value={theme}>
+      <Header />
+    </ThemeContext.Provider>
+  );
+}
+```
+
+### Performance Optimization Guidelines
+
+```tsx
+// 1. When to use React.memo
+// ✅ Use for:
+// - Large components that re-render often
+// - Components with expensive renders
+// - Pure components (same props = same output)
+// ❌ Don't use for:
+// - Small components
+// - Components that always receive new props
+const ExpensiveComponent = React.memo(function MyComponent({ data }) {
+  return <div>{data}</div>;
+});
+
+// 2. When to use useMemo
+// ✅ Use for:
+// - Expensive calculations
+// - Creating new objects/arrays that are dependencies
+// - Preventing unnecessary re-renders
+// ❌ Don't use for:
+// - Simple calculations
+// - Values that change frequently
+const memoizedValue = useMemo(() => {
+  return computeExpensiveValue(a, b);
+}, [a, b]);
+
+// 3. When to use useCallback
+// ✅ Use for:
+// - Callbacks passed to memoized components
+// - Callbacks used in useEffect dependencies
+// - Event handlers that cause re-renders
+// ❌ Don't use for:
+// - Simple event handlers
+// - Callbacks that don't cause re-renders
+const memoizedCallback = useCallback(() => {
+  doSomething(a, b);
+}, [a, b]);
+```
