@@ -6,21 +6,21 @@ A concise refresher on essential Python structures, APIs, and patterns commonly 
 
 ## 1. Lists
 
-- **Creation and Basic Methods**:
+**Creation and Basic Methods**:
 
-  ```python
-  lst = [1, 2, 3]
-  lst.append(4)         # [1, 2, 3, 4]
-  lst.extend([5, 6])    # [1, 2, 3, 4, 5, 6]
-  lst.insert(2, 99)     # insert 99 at index 2
-  lst.pop()             # pops from end
-  lst.pop(1)            # pop item at index 1
-  lst.remove(3)         # removes first occurrence of 3
-  lst.index(99)         # returns index of first occurrence
-  lst.count(2)          # count occurrences of 2
-  ```
+```python
+lst = [1, 2, 3]
+lst.append(4)         # [1, 2, 3, 4]
+lst.extend([5, 6])    # [1, 2, 3, 4, 5, 6]
+lst.insert(2, 99)     # insert 99 at index 2
+lst.pop()             # pops from end
+lst.pop(1)            # pop item at index 1
+lst.remove(3)         # removes first occurrence of 3
+lst.index(99)         # returns index of first occurrence
+lst.count(2)          # count occurrences of 2
+```
 
-- **Slicing**:
+**Slicing**:
 
 ```python
 sub_list = lst[1:4]      # from index 1 to 3
@@ -28,7 +28,7 @@ sub_list = lst[::2]      # step by 2
 sub_list = lst[::-1]     # reversed copy
 ```
 
-- **List Comprehension**:
+**List Comprehension**:
 
 ```python
 squares = [x*x for x in range(5)]                # [0, 1, 4, 9, 16]
@@ -37,7 +37,7 @@ evens   = [x for x in lst if x % 2 == 0]
 
 ## 2. Dictionaries
 
-- **Creation and Access**:
+**Creation and Access**:
 
 ```python
 d = {"a": 1, "b": 2}
@@ -47,7 +47,7 @@ d["c"] = 3                # add or overwrite
 del d["a"]                # remove key 'a'
 ```
 
-- **Iteration**:
+**Iteration**:
 
 ```python
 for key in d:
@@ -62,7 +62,7 @@ for val in d.values():
 
 ## 3. Sets
 
-- **Usage**:
+**Usage**:
 
 ```python
 s = {1, 2, 3}
@@ -79,7 +79,7 @@ s.difference(s2)    # s - s2
 
 ## 3. Sorting
 
-- **In-Place vs Returned**:
+**In-Place vs Returned**:
 
 ```python
 arr = [3, 1, 2]
@@ -87,7 +87,7 @@ arr.sort()                 # modifies arr in place
 sorted_arr = sorted(arr)   # returns new list
 ```
 
-- **Custom Sorting**:
+**Custom Sorting**:
 
 ```python
 arr.sort(reverse=True)
@@ -96,7 +96,7 @@ arr.sort(key=lambda x: x[1])  # if arr is a list of tuples
 
 ## 4. Strings
 
-- **Basic Operations**:
+**Basic Operations**:
 
 ```python
 s = "hello"
@@ -107,7 +107,7 @@ s.split(",")           # splits string into list
 ",".join(["a", "b"])   # joins list into string with delimiter
 ```
 
-- **F-Strings and Formatting**:
+**F-Strings and Formatting**:
 
 ```python
 name = "Alice"
@@ -121,7 +121,7 @@ print("Name: {}, Age: {}".format(name, age))
 
 ## 5. Collections Module
 
-- **Counter**:
+**Counter**:
 
 ```python
 from collections import Counter
@@ -130,7 +130,7 @@ cnt[3]                              # 3 (count of element 3)
 cnt.most_common(2)                  # [(3, 3), (2, 2)]
 ```
 
-- **defaultdict**:
+**defaultdict**:
 
 ```python
 from collections import defaultdict
@@ -141,7 +141,7 @@ d = defaultdict(int)      # default value is 0
 
 ## 6. Queue and Deque
 
-- **Queue (FIFO)**:
+**Queue (FIFO)**:
 
 ```python
 from collections import deque
@@ -189,14 +189,14 @@ k_smallest = heapq.nsmallest(3, nums)
 
 ## 9. Additional Tips
 
-- **Infinity in Python**:
+**Infinity in Python**:
 
 ```python
 float('inf')   # positive infinity
 float('-inf')  # negative infinity
 ```
 
-- **List/Dict/Set Comprehension with Multiple Conditions**:
+**List/Dict/Set Comprehension with Multiple Conditions**:
 
 ```python
 # List comprehension with if-else
@@ -212,7 +212,7 @@ float('-inf')  # negative infinity
 {x**2 for x in range(5)}
 ```
 
-- **Enumerate**:
+**Enumerate**:
 
 ```python
 for i, val in enumerate(lst):        # start from 0
