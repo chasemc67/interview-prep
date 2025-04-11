@@ -1,0 +1,15 @@
+This is a collection of interview preparation cheat sheets for software engineering interviews. The repository contains markdown files that serve as quick references for different programming languages and concepts commonly tested in technical interviews.
+
+Key aspects of this repository:
+- Each cheat sheet focuses on a specific language or concept (e.g., Python, TypeScript)
+- Cheat sheets follow a consistent format with clear sections and code examples
+- All code examples are properly formatted with syntax highlighting
+- Files use snake_case naming convention with appropriate extensions
+- The repository is designed to be both a quick reference and a study guide
+
+When working in this repository:
+- Maintain consistent formatting across all cheat sheets
+- Ensure code examples are clear, concise, and properly documented
+- Follow the established structure for new cheat sheets
+- After making any changes, we also update the README.md and .cursorrules files accordingly when it makes sense
+- Focus on practical, interview-relevant content rather than exhaustive language documentation
