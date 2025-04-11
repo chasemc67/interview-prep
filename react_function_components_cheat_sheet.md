@@ -2,6 +2,60 @@
 
 A concise guide to React function components, hooks, and patterns commonly used in modern React development.
 
+## Quick Reference
+
+### Most Common Hooks
+
+```tsx
+// State Management
+const [state, setState] = useState(initialValue);
+
+// Side Effects
+useEffect(() => {
+  // Effect code
+  return () => {
+    // Cleanup
+  };
+}, [dependencies]);
+
+// Memoization
+const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
+const memoizedCallback = useCallback(() => {
+  doSomething(a, b);
+}, [a, b]);
+```
+
+### Common Patterns
+
+```tsx
+// Controlled Components
+const [value, setValue] = useState("");
+<input value={value} onChange={(e) => setValue(e.target.value)} />;
+
+// Conditional Rendering
+{
+  condition && <Component />;
+}
+{
+  condition ? <ComponentA /> : <ComponentB />;
+}
+
+// List Rendering
+{
+  items.map((item) => <Component key={item.id} {...item} />);
+}
+```
+
+### Quick Lookup
+
+| Pattern       | Syntax                                     |
+| ------------- | ------------------------------------------ |
+| Props         | `({ prop1, prop2 }: Props)`                |
+| Event Handler | `onClick={(e) => handleClick(e)}`          |
+| Fragment      | `<></>` or `<Fragment></Fragment>`         |
+| Context       | `useContext(MyContext)`                    |
+| Ref           | `const ref = useRef<HTMLDivElement>(null)` |
+
 ---
 
 ## 1. Basic Component Structure
@@ -420,6 +474,128 @@ function App() {
     <ErrorBoundary>
       <MyComponent />
     </ErrorBoundary>
+  );
+}
+```
+
+## 11. Best Practices
+
+### Common Pitfalls to Avoid
+
+```tsx
+// ❌ Missing dependencies in useEffect
+useEffect(() => {
+  setCount(count + 1); // Bad - missing count in deps
+}, []);
+
+useEffect(() => {
+  setCount((prev) => prev + 1); // Better - use functional update
+}, []);
+
+// ❌ Unnecessary re-renders
+function Parent() {
+  const [count, setCount] = useState(0);
+  const handleClick = () => setCount(count + 1); // Bad - new function each render
+
+  return <Child onClick={handleClick} />;
+}
+
+function Parent() {
+  const [count, setCount] = useState(0);
+  const handleClick = useCallback(() => setCount(count + 1), [count]); // Better
+
+  return <Child onClick={handleClick} />;
+}
+
+// ❌ Prop drilling
+function App() {
+  const [user, setUser] = useState(null);
+  return <Header user={user} />; // Bad - drilling through components
+}
+
+function App() {
+  const [user, setUser] = useState(null);
+  return (
+    <UserContext.Provider value={user}>
+      <Header />
+    </UserContext.Provider>
+  ); // Better - use context
+}
+```
+
+### Performance Considerations
+
+```tsx
+// Use React.memo for expensive components
+const ExpensiveComponent = React.memo(function MyComponent({ data }) {
+  return <div>{data}</div>;
+});
+
+// Use useMemo for expensive calculations
+const result = useMemo(() => {
+  return expensiveCalculation(data);
+}, [data]);
+
+// Use useCallback for stable function references
+const handleClick = useCallback(() => {
+  doSomething(data);
+}, [data]);
+
+// Use virtualization for long lists
+import { FixedSizeList } from "react-window";
+
+function List({ items }) {
+  return (
+    <FixedSizeList
+      height={400}
+      width={300}
+      itemCount={items.length}
+      itemSize={50}
+    >
+      {({ index, style }) => <div style={style}>{items[index]}</div>}
+    </FixedSizeList>
+  );
+}
+```
+
+### Code Style Guidelines
+
+```tsx
+// Use consistent component naming
+function UserProfile() {} // PascalCase for components
+const userProfile = {}; // camelCase for variables
+
+// Use TypeScript for type safety
+interface UserProps {
+  id: number;
+  name: string;
+  age?: number;
+}
+
+// Use proper prop types
+function User({ id, name, age = 18 }: UserProps) {
+  return (
+    <div>
+      <h1>{name}</h1>
+      {age && <p>Age: {age}</p>}
+    </div>
+  );
+}
+
+// Document components
+/**
+ * UserProfile component displays user information
+ *
+ * @component
+ * @param {UserProps} props - Component props
+ * @returns {JSX.Element} Rendered component
+ */
+function UserProfile({ id, name, age }: UserProps): JSX.Element {
+  return (
+    <div>
+      <h1>{name}</h1>
+      {age && <p>Age: {age}</p>}
+    </div>
   );
 }
 ```

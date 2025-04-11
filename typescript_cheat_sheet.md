@@ -2,6 +2,45 @@
 
 A concise refresher on essential TypeScript types, syntax, and patterns commonly used in coding interviews.
 
+## Quick Reference
+
+### Most Common Types
+
+```typescript
+// Primitives
+string, number, boolean, null, undefined, any, void, never
+
+// Collections
+Array<T>, [T, U], Set<T>, Map<K, V>
+
+// Objects
+interface, type, class
+```
+
+### Common Patterns
+
+```typescript
+// Two Pointers
+let left = 0,
+  right = arr.length - 1;
+
+// Sliding Window
+let window = arr.slice(0, k);
+
+// Binary Search
+let mid = Math.floor((left + right) / 2);
+```
+
+### Quick Lookup
+
+| Operation          | Syntax                  |
+| ------------------ | ----------------------- |
+| Type Assertion     | `value as Type`         |
+| Optional Chaining  | `obj?.prop`             |
+| Nullish Coalescing | `value ?? defaultValue` |
+| Spread Operator    | `{...obj1, ...obj2}`    |
+| Destructuring      | `const {prop} = obj`    |
+
 ---
 
 ## 1. Basic Types
@@ -299,5 +338,88 @@ function binarySearch(nums: number[], target: number): number {
     else right = mid - 1;
   }
   return -1;
+}
+```
+
+## 12. Best Practices
+
+### Common Pitfalls to Avoid
+
+```typescript
+// ❌ Avoid using 'any' type
+let data: any = getData(); // Bad
+let data: unknown = getData(); // Better
+
+// ❌ Don't use type assertions without validation
+const value = someValue as string; // Bad
+if (typeof someValue === "string") {
+  // Better
+  const value = someValue;
+}
+
+// ❌ Avoid non-null assertions
+const element = document.getElementById("id")!; // Bad
+const element = document.getElementById("id");
+if (element) {
+  // Better
+  // Use element
+}
+```
+
+### Performance Considerations
+
+```typescript
+// Use const for immutable values
+const PI = 3.14; // Better than let
+
+// Prefer type aliases for complex types
+type User = {
+  id: number;
+  name: string;
+};
+
+// Use readonly for immutable arrays/objects
+const readonlyArray: readonly number[] = [1, 2, 3];
+
+// Use proper type narrowing
+function processValue(value: string | number) {
+  if (typeof value === "string") {
+    // Type is narrowed to string
+  }
+}
+```
+
+### Code Style Guidelines
+
+```typescript
+// Use consistent naming conventions
+interface IUser {
+  // Prefix interfaces with I
+  id: number;
+  name: string;
+}
+
+// Use PascalCase for types and interfaces
+type UserProfile = {
+  // ...
+};
+
+// Use camelCase for variables and functions
+const getUserData = () => {
+  // ...
+};
+
+// Use meaningful type names
+type UserId = number; // Better than just 'number'
+
+// Document complex types
+/**
+ * Represents a user in the system
+ * @property id - Unique identifier
+ * @property name - User's full name
+ */
+interface User {
+  id: number;
+  name: string;
 }
 ```

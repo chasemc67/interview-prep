@@ -2,6 +2,50 @@
 
 A concise refresher on essential Python structures, APIs, and patterns commonly used in coding interviews.
 
+## Quick Reference
+
+### Most Common Data Structures
+
+```python
+# Lists
+lst = [1, 2, 3]
+lst.append(4)      # Add to end
+lst.pop()          # Remove from end
+
+# Dictionary
+d = {"key": "value"}
+d.get("key")       # Safe access
+d["key"]           # Direct access
+
+# Set
+s = {1, 2, 3}
+s.add(4)           # Add element
+s.remove(2)        # Remove element
+```
+
+### Common Patterns
+
+```python
+# Two Pointers
+left, right = 0, len(arr) - 1
+
+# Sliding Window
+window = arr[i:i+k]
+
+# Binary Search
+mid = (left + right) // 2
+```
+
+### Quick Lookup
+
+| Operation                | Syntax                                |
+| ------------------------ | ------------------------------------- |
+| List Slicing             | `arr[start:end:step]`                 |
+| Dictionary Access        | `d.get(key, default)`                 |
+| Set Operations           | `s1.union(s2)`, `s1.intersection(s2)` |
+| List Comprehension       | `[x for x in iterable if condition]`  |
+| Dictionary Comprehension | `{k: v for k, v in items}`            |
+
 ---
 
 ## 1. Lists
@@ -220,4 +264,84 @@ for i, val in enumerate(lst):        # start from 0
 
 for i, val in enumerate(lst, 1):     # start from 1
     print(f"Index {i}: {val}")
+```
+
+## 10. Best Practices
+
+### Common Pitfalls to Avoid
+
+```python
+# ❌ Mutable default arguments
+def bad_function(items=[]):  # Bad
+    items.append(1)
+    return items
+
+def good_function(items=None):  # Better
+    if items is None:
+        items = []
+    items.append(1)
+    return items
+
+# ❌ Using list as a stack
+stack = []
+stack.insert(0, item)  # Bad - O(n)
+stack.append(item)     # Better - O(1)
+
+# ❌ String concatenation in loops
+result = ""
+for s in strings:
+    result += s  # Bad - O(n²)
+result = "".join(strings)  # Better - O(n)
+```
+
+### Performance Considerations
+
+```python
+# Use sets for membership testing
+if item in my_list:  # O(n)
+if item in my_set:   # O(1)
+
+# Use list comprehension over loops
+result = []
+for x in range(10):
+    result.append(x * 2)  # Slower
+result = [x * 2 for x in range(10)]  # Faster
+
+# Use generators for large datasets
+def process_large_data():
+    for item in large_dataset:
+        yield process(item)  # Memory efficient
+```
+
+### Code Style Guidelines
+
+```python
+# Follow PEP 8 naming conventions
+def calculate_total():  # Use snake_case for functions
+    MAX_VALUE = 100    # Use UPPERCASE for constants
+    class UserProfile:  # Use PascalCase for classes
+        pass
+
+# Use meaningful variable names
+x = 10  # Bad
+max_retries = 10  # Better
+
+# Use type hints
+from typing import List, Dict
+
+def process_items(items: List[int]) -> Dict[str, int]:
+    pass
+
+# Document your code
+def calculate_average(numbers: List[float]) -> float:
+    """
+    Calculate the average of a list of numbers.
+
+    Args:
+        numbers: List of numbers to average
+
+    Returns:
+        float: The average of the numbers
+    """
+    return sum(numbers) / len(numbers)
 ```
